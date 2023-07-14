@@ -3,6 +3,10 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+Notiflix.Notify.init({
+    position: 'center-top',
+  });
+
 const API_URL = 'https://pixabay.com/api/?';
 const API_KEY = '38252708-5f6067fe441253ed3ba76750b';
 
