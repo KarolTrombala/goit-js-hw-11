@@ -31,13 +31,12 @@ const loadApi = () => {
   searchApi()
     .then(response => {
       if (response.data.hits.length > 0 && inputEl.value !== '') {
+        const totalHits = response.data.total;
+
         galleryEl.innerHTML = createGallery(response);
 
-        const totalHits = response.data.total;
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-
         loadMoreBtnEl.style.visibility = 'visible';
-
         let lightbox = new SimpleLightbox('.gallery a');
       } else {
         clear();
