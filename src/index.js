@@ -31,7 +31,6 @@ const loadApi = () => {
   searchApi()
     .then(response => {
       if (response.data.hits.length > 0 && inputEl.value !== '') {
-        clear();
         galleryEl.innerHTML = createGallery(response);
 
         const totalHits = response.data.total;
@@ -41,6 +40,7 @@ const loadApi = () => {
 
         let lightbox = new SimpleLightbox('.gallery a');
       } else {
+        clear();
         Notiflix.Notify.failure(
           `Sorry, there are no images matching your search query. Please try again.`
         );
@@ -154,13 +154,11 @@ window.addEventListener('scroll', () => {
 //         const totalHits = response.data.total;
 //         const totalPages = totalHits / 40;
 
-//         // totalHits / page > 40
 //         totalHits > 40
 //         ? (loadMoreBtnEl.style.visibility = 'visible')
 //         : (loadMoreBtnEl.style.visibility = 'hidden');
 
-//         // if (totalHits / page < 40) {
-// if (page > totalPages) {
+//            if (page > totalPages) {
 //             Notiflix.Notify.failure(
 //                 `We're sorry, but you've reached the end of search results.`
 //                 );
