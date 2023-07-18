@@ -13,7 +13,7 @@ const API_KEY = '38252708-5f6067fe441253ed3ba76750b';
 const inputEl = document.querySelector('input[name="searchQuery"]');
 const btnEl = document.querySelector('button[type="submit"]');
 const galleryEl = document.querySelector('.gallery');
-// const loadMoreBtnEl = document.querySelector('.load-more');
+const loadMoreBtnEl = document.querySelector('.load-more');
 
 let page = 1;
 
@@ -40,11 +40,11 @@ const loadApi = () => {
         galleryEl.innerHTML = createGallery(response);
 
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-        // loadMoreBtnEl.style.visibility = 'visible';
+        loadMoreBtnEl.style.visibility = 'visible';
         let lightbox = new SimpleLightbox('.gallery a');
       } else {
         clear();
-        // loadMoreBtnEl.style.visibility = 'hidden';
+        loadMoreBtnEl.style.visibility = 'hidden';
         Notiflix.Notify.failure(
           `Sorry, there are no images matching your search query. Please try again.`
         );
@@ -99,23 +99,23 @@ const loadMoreApi = () => {
       .querySelector('.gallery')
       .firstElementChild.getBoundingClientRect();
 
-      // loadMoreBtnEl.style.visibility = 'hidden';
+      loadMoreBtnEl.style.visibility = 'hidden';
 
     if (response.data.total / page < 40) {
-      // loadMoreBtnEl.style.visibility = 'hidden';
+      loadMoreBtnEl.style.visibility = 'hidden';
       Notiflix.Notify.failure(
         `We're sorry, but you've reached the end of search results.`
       );
     } 
-    // else {
-    //   loadMoreBtnEl.style.visibility = 'visible';
-    // }
+    else {
+      loadMoreBtnEl.style.visibility = 'visible';
+    }
   });
 };
 
-// loadMoreBtnEl.addEventListener('click', e => {
-//   loadMoreApi();
-// });
+loadMoreBtnEl.addEventListener('click', e => {
+  loadMoreApi();
+});
 
 window.addEventListener('scroll', () => {
   if (
@@ -125,71 +125,3 @@ window.addEventListener('scroll', () => {
     loadMoreApi();
   }
 });
-
-// ---------------------------------------------------------------------------------------------------------------
-//   Old version
-// ---------------------------------------------------------------------------------------------------------------
-//   const loadApi = () => {
-//     searchApi()
-//     .then(response => {
-//         const totalHits = response.data.total;
-//         Notiflix.Notify.info(`Hooray! We found ${totalHits} images.`);
-
-//         if (response.data.hits.length === 0) throw new Error();
-
-//         totalHits > 40
-//         ? (loadMoreBtnEl.style.visibility = 'visible')
-//         : (loadMoreBtnEl.style.visibility = 'hidden');
-
-//         galleryEl.innerHTML = createGallery(response)
-//         let lightbox = new SimpleLightbox('.gallery a');
-//         page += 1;
-//     })
-//     .catch(error => {
-//         Notiflix.Notify.failure(`Sorry, there are no images matching your search query. Please try again.`);
-//     });
-//   };
-
-//   const loadMoreApi = () => {
-//     searchApi()
-//     .then(response => {
-//         const totalHits = response.data.total;
-//         const totalPages = totalHits / 40;
-
-//         totalHits > 40
-//         ? (loadMoreBtnEl.style.visibility = 'visible')
-//         : (loadMoreBtnEl.style.visibility = 'hidden');
-
-//            if (page > totalPages) {
-//             Notiflix.Notify.failure(
-//                 `We're sorry, but you've reached the end of search results.`
-//                 );
-//          }
-
-//         galleryEl.insertAdjacentHTML('beforeend', createGallery(response));
-//         galleryEl.addEventListener('click', e => e.preventDefault());
-//         let lightbox = new SimpleLightbox('.gallery a');
-//         lightbox.refresh();
-
-//         const { height: cardHeight } = document
-//          .querySelector('.gallery')
-//          .firstElementChild.getBoundingClientRect();
-
-//          window.scrollBy({
-//             top: cardHeight * 2,
-//             behavior: 'smooth',
-//          });
-//     });
-//   };
-
-//   btnEl.addEventListener('click', e => {
-//     e.preventDefault();
-//     page = 1;
-//     loadApi();
-//   });
-
-//   loadMoreBtnEl.addEventListener('click', e => {
-//     e.preventDefault();
-//     page ++;
-//     loadMoreApi();
-//   });
